@@ -85,9 +85,12 @@
 
   <!-- Submit -->
   {#if success !== 1}
-    <div class="mt-2 flex flex-col">
+  <p class="text-sm font-[16px] font-semibold">
+    Please remember that only NIP07 is supported for now. And please enable NIP07 in the <a href="/settings">settings</a>!
+  </p>
+    <div class="mt-2">
       <button
-      on:click={publish} class="inline-flex justify-end ml-auto items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      on:click={publish} class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >Submit</button
       >
     </div>

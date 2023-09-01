@@ -1,25 +1,25 @@
 import { browser } from '$app/environment';
 import NDK, { NDKEvent, NDKNip07Signer } from '@nostr-dev-kit/ndk';
+import { standardRelays } from './consts';
 
 export let ndk: NDK | undefined = undefined;
 
-const someRelays = ["wss://nos.lol", "wss://relay.damus.io", "wss://relay.snort.social"]
-
 if (browser) {
-    let signer = undefined;
+    const relays = JSON.parse(localStorage.getItem("wikinostr_relays") || JSON.stringify(standardRelays));
+    const useNip07Signer = JSON.parse(localStorage.getItem("wikinostr_usenip07") || 'false');
+
     try {
-        signer = new NDKNip07Signer();
+        if (useNip07Signer) {
+            ndk = new NDK({
+                explicitRelayUrls: relays,
+                signer: new NDKNip07Signer(),
+            });
+        } else {
+            ndk = new NDK({
+                explicitRelayUrls: relays,
+            });
+        }
     } catch (error) {
-        console.log("error starting nip07 signer", error)
-    }
-    if (signer) {
-        ndk = new NDK({
-            explicitRelayUrls: someRelays,
-            signer: signer,
-        });
-    } else {
-        ndk = new NDK({
-            explicitRelayUrls: someRelays,
-        });
+        alert('error: ' + error);
     }
 }
