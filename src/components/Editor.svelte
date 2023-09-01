@@ -67,7 +67,7 @@
     <p class="text-sm">Summary</p>
     <textarea
       bind:value={articleSummary}
-      rows="6"
+      rows="3"
       placeholder="example: The Greek alphabet is the earliest known alphabetic script to have distict letters for vowels. The Greek alphabet existed in many local variants." class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
     />
   </div>
@@ -79,7 +79,7 @@
     <textarea
       placeholder="example: The **Greek alphabet** has been used to write the [[Greek language]] sincie the late 9th or early 8th century BC. The Greek alphabet is the ancestor of the [[Latin]] and [[Cyrillic]] scripts."
       bind:value={articleContent}
-      rows="12" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      rows="9" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
     />
   </div>
 

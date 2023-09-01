@@ -55,6 +55,7 @@
         {#if event.created_at}
           updated on {formatDate(event.created_at)}
         {/if}
+        &nbsp;• &nbsp;<a href={`/fork/${eventid}`}>Fork</a>
       </span>
 
       {@html parse(event?.content)}
