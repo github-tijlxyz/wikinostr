@@ -4,7 +4,6 @@
     import { onMount } from 'svelte';
 
     let relays: string[] = [];
-    let useNip07Signing: boolean = false;
     let newRelay = "";
 
     function removeRelay (index: number) {
@@ -23,7 +22,6 @@
     function saveData () {
         addRelay();
         localStorage.setItem("wikinostr_relays", JSON.stringify(relays));
-        localStorage.setItem("wikinostr_usenip07", JSON.stringify(useNip07Signing));
         setTimeout(() => {
             window.location.href = "";
         }, 1)
@@ -31,18 +29,10 @@
 
     if (browser) {
         relays = JSON.parse(localStorage.getItem("wikinostr_relays") || JSON.stringify(standardRelays));
-        useNip07Signing = JSON.parse(localStorage.getItem("wikinostr_usenip07") || 'false');
     }
 </script>
 
-<!-- This component is WIP -->
 <div class="p-6">
-
-    <!-- Use NIP07 Login -->
-    <div class="mb-6">
-        <p class="text-sm">Use NIP07 signing</p>
-        <input bind:checked={useNip07Signing} type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-    </div>
 
     <!-- Relay Selection -->
     <div class="mb-6">

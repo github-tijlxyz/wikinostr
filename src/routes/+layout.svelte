@@ -9,12 +9,9 @@
 
   onMount(() => {
     if (browser) {
-      const useNip07Signer = JSON.parse(localStorage.getItem("wikinostr_usenip07") || 'false');
-      if (useNip07Signer) {
-        const signer = new NDKNip07Signer();
-        $ndk.signer = signer;
-        ndk.set($ndk);
-      }
+      const signer = new NDKNip07Signer();
+      $ndk.signer = signer;
+      ndk.set($ndk);
     }
   })
 </script>
