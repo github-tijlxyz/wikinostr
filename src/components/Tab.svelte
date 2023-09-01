@@ -7,20 +7,12 @@
   import Search from "./Search.svelte";
   export let tab: Tab;
 
-  export function removeSelf() {
-    // Remove self and child
+  function removeSelf() {
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
-      const newTabs = $tabs.slice();
-      const childTabs = newTabs.filter((item) => item.parent === tab.id);
-      childTabs.forEach((childTab) => {
-        const childIndex = newTabs.indexOf(childTab);
-        if (childIndex !== -1) {
-          newTabs.splice(childIndex, 1);
-        }
-      });
-      newTabs.splice(index, 1);
-      tabs.set(newTabs);
+      const newTabs = [...$tabs]; // Create a shallow copy of the $tabs array
+      newTabs.splice(index, 1);   // Remove the specified tab
+      tabs.set(newTabs);          // Update the tabs store
     }
   }
 
@@ -41,29 +33,29 @@
   }
 
   // use for search?
-  // function replaceSelf(newType: string, newData: string) {
-  //   // Replace self (if no child)
-  //   const index = $tabs.findIndex((item) => item.id === tab.id);
-  //   if (index !== -1) {
-  //     const newTabs = $tabs.slice();
-  //     // Remove children of the current tab
-  //     const removedChildren = newTabs.filter((item) => item.parent === tab.id);
-  //     removedChildren.forEach((child) => {
-  //       const childIndex = newTabs.indexOf(child);
-  //       if (childIndex !== -1) {
-  //         newTabs.splice(childIndex, 1);
-  //       }
-  //     });
-  //     // Replace the current tab with a new tab
-  //     const updatedTab = {
-  //       id: generateRandomNumber(),
-  //       type: newType,
-  //       data: newData,
-  //     };
-  //     newTabs[index] = updatedTab;
-  //     tabs.set(newTabs);
-  //   }
-  // }
+  function replaceSelf(newType: string, newData: string) {
+    // Replace self (if no child)
+    const index = $tabs.findIndex((item) => item.id === tab.id);
+    if (index !== -1) {
+      const newTabs = $tabs.slice();
+      // Remove children of the current tab
+      const removedChildren = newTabs.filter((item) => item.parent === tab.id);
+      removedChildren.forEach((child) => {
+        const childIndex = newTabs.indexOf(child);
+        if (childIndex !== -1) {
+          newTabs.splice(childIndex, 1);
+        }
+      });
+      // Replace the current tab with a new tab
+      const updatedTab = {
+        id: generateRandomNumber(),
+        type: newType,
+        data: newData,
+      };
+      newTabs[index] = updatedTab;
+      tabs.set(newTabs);
+    }
+  }
 
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
@@ -88,11 +80,12 @@
   rounded-lg border border-slate-500 bg-slate-50
   h-[calc(100vh_-_64px_-_32px)]"
 >
+<button on:click={removeSelf}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
   {#if idtoload}
     <Article {createChild} eventid={idtoload} tabid={tab.id} />
   {/if}
 
   {#if searchquerytoload}
-    <Search {createChild} query={searchquerytoload} />
+    <Search {replaceSelf} query={searchquerytoload} />
   {/if}
 </div>

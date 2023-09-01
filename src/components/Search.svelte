@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
 
   export let query: string;
-  export let createChild: (type: string, data: string) => void;
+  export let replaceSelf: (newType: string, newData: string) => void;
   let results: NDKEvent[] = [];
   let tried = 0;
 
@@ -39,7 +39,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      on:click={() => createChild("article", result.id)}
+      on:click={() => replaceSelf("article", result.id)}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>
