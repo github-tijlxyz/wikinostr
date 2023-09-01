@@ -43,9 +43,7 @@
       </h1>
       <span>
         {#await event.author?.fetchProfile()}
-          by <a href={`nostr:${event.author.npub}`}
-          >...</a
-        >,
+          by <a href={`nostr:${event.author.npub}`}>...</a>,
         {:then profile}
           by <a href={`nostr:${event.author.npub}`}
             >{profile !== null &&

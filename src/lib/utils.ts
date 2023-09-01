@@ -4,7 +4,7 @@ export function formatDate(unixtimestamp: number) {
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  const date = new Date(unixtimestamp * 1000); // convert unix timestamp to millis
+  const date = new Date(unixtimestamp * 1000);
   const day = date.getDate();
   const month = months[date.getMonth()];
   const year = date.getFullYear();

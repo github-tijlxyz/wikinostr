@@ -52,7 +52,8 @@
     <p class="text-sm">Title</p>
     <input
       placeholder="example: Greek alphabet"
-      bind:value={articleTitle} class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      bind:value={articleTitle}
+      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
     />
   </div>
   <div>
@@ -60,7 +61,8 @@
     <textarea
       bind:value={articleSummary}
       rows="3"
-      placeholder="example: The Greek alphabet is the earliest known alphabetic script to have distict letters for vowels. The Greek alphabet existed in many local variants." class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      placeholder="example: The Greek alphabet is the earliest known alphabetic script to have distict letters for vowels. The Greek alphabet existed in many local variants."
+      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
     />
   </div>
   <div>
@@ -71,18 +73,21 @@
     <textarea
       placeholder="example: The **Greek alphabet** has been used to write the [[Greek language]] sincie the late 9th or early 8th century BC. The Greek alphabet is the ancestor of the [[Latin]] and [[Cyrillic]] scripts."
       bind:value={articleContent}
-      rows="9" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      rows="9"
+      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
     />
   </div>
 
   <!-- Submit -->
   {#if success !== 1}
-  <p class="text-sm font-[16px] font-semibold">
-    Please remember that only NIP07 is supported for now. And please enable NIP07 in the <a href="/settings">settings</a>!
-  </p>
+    <p class="text-sm font-[16px] font-semibold">
+      Please remember that only NIP07 is supported for now. And please enable
+      NIP07 in the <a href="/settings">settings</a>!
+    </p>
     <div class="mt-2">
       <button
-      on:click={publish} class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        on:click={publish}
+        class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >Submit</button
       >
     </div>

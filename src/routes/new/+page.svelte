@@ -5,4 +5,9 @@
   let startD = $page.url.searchParams.get("n") || undefined;
 </script>
 
-<Editor startSummary={undefined} startTitle={undefined} startContent={undefined} startD={startD} />
+<Editor
+  startSummary={undefined}
+  startTitle={undefined}
+  startContent={undefined}
+  {startD}
+/>

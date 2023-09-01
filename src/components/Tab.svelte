@@ -2,7 +2,6 @@
   import { tabs } from "$lib/state";
   import type { Tab } from "$lib/types";
   import { generateRandomNumber, scrollTabIntoView } from "$lib/utils";
-  import { onMount } from "svelte";
   import Article from "./Article.svelte";
   import Search from "./Search.svelte";
   export let tab: Tab;
@@ -10,9 +9,9 @@
   function removeSelf() {
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
-      const newTabs = [...$tabs]; // Create a shallow copy of the $tabs array
-      newTabs.splice(index, 1);   // Remove the specified tab
-      tabs.set(newTabs);          // Update the tabs store
+      const newTabs = [...$tabs];
+      newTabs.splice(index, 1);
+      tabs.set(newTabs);
     }
   }
 
@@ -28,17 +27,14 @@
       };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
-      setTimeout(() => scrollTabIntoView(String(newChild.id)), 5)
+      setTimeout(() => scrollTabIntoView(String(newChild.id)), 5);
     }
   }
 
-  // use for search?
   function replaceSelf(newType: string, newData: string) {
-    // Replace self (if no child)
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
       const newTabs = $tabs.slice();
-      // Remove children of the current tab
       const removedChildren = newTabs.filter((item) => item.parent === tab.id);
       removedChildren.forEach((child) => {
         const childIndex = newTabs.indexOf(child);
@@ -46,7 +42,6 @@
           newTabs.splice(childIndex, 1);
         }
       });
-      // Replace the current tab with a new tab
       const updatedTab = {
         id: generateRandomNumber(),
         type: newType,
@@ -60,14 +55,14 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
-    if (tab.type == "welcome") {
-      idtoload =
-        "e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492";
-    } else if (tab.type == "articlefind") {
-      searchquerytoload = tab.data;
-    } else if (tab.type == "article") {
-      idtoload = tab.data;
-    }
+  if (tab.type == "welcome") {
+    idtoload =
+      "e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492";
+  } else if (tab.type == "articlefind") {
+    searchquerytoload = tab.data;
+  } else if (tab.type == "article") {
+    idtoload = tab.data;
+  }
 </script>
 
 <div
@@ -80,7 +75,21 @@
   rounded-lg border border-slate-500 bg-slate-50
   h-[calc(100vh_-_64px_-_32px)]"
 >
-<button on:click={removeSelf}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
+  <button on:click={removeSelf}
+    ><svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      /></svg
+    ></button
+  >
   {#if idtoload}
     <Article {createChild} eventid={idtoload} tabid={tab.id} />
   {/if}
