@@ -12,7 +12,12 @@
   async function search(query: string) {
     results = [];
     const filter = { kinds: [wikiKind], "#d": [query] };
-    const events = await ndk.fetchEvents(filter);
+    const events = await ndk?.fetchEvents(filter);
+    if (!events) {
+      tried = 1;
+      results = [];
+      return;
+    }
     tried = 1;
     results = Array.from(events);
   }
@@ -31,6 +36,8 @@
     </p>
   </div>
   {#each results as result}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       on:click={() => createChild("article", result.id)}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
