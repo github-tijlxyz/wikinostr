@@ -68,17 +68,14 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
-  // onMount(() => {
     if (tab.type == "welcome") {
-      // TODO IMPORTANT: change welcome wiki article (to a REAL wiki article)
       idtoload =
-        "657faadfe17e0fb2358b4a5c5fdeff5b54ad61e2a0fa07ac80a7d31077b688db";
+        "e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492";
     } else if (tab.type == "articlefind") {
       searchquerytoload = tab.data;
     } else if (tab.type == "article") {
       idtoload = tab.data;
     }
-  // });
 </script>
 
 <div
