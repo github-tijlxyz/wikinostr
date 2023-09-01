@@ -11,7 +11,7 @@
       const newTab: Tab = {
         id: generateRandomNumber(),
         type: "articlefind",
-        data: query,
+        data: query.toLowerCase().replaceAll(" ", "-"),
       };
       newTabs.push(newTab);
       tabs.set(newTabs);

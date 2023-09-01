@@ -23,7 +23,7 @@
   }
 
   onMount(async () => {
-    event = await ndk.fetchEvent(eventid);
+    event = await $ndk.fetchEvent(eventid);
   });
 
   afterUpdate(() => {
@@ -35,7 +35,7 @@
   <article class="prose font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
     {#if event !== null}
       <h1 class="mb-0">
-        {#if event?.tags.find((e) => e[0] == "title")}
+        {#if event?.tags.find((e) => e[0] == "title")?.[0]}
           {event.tags.find((e) => e[0] == "title")?.[1]}
         {:else}
           {event.tags.find((e) => e[0] == "d")?.[1]}
@@ -43,14 +43,14 @@
       </h1>
       <span>
         {#await event.author?.fetchProfile()}
-          by <span>loading...</span>
+          by <a href={`nostr:${event.author.npub}`}
+          >...</a
+        >,
         {:then profile}
           by <a href={`nostr:${event.author.npub}`}
             >{profile !== null &&
               JSON.parse(Array.from(profile)[0]?.content)?.name}</a
           >,
-        {:catch error}
-          error while loading user
         {/await}
         {#if event.created_at}
           updated on {formatDate(event.created_at)}

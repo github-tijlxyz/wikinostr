@@ -4,9 +4,18 @@
   import "../app.postcss";
   import Searchbar from "../components/Searchbar.svelte";
   import { ndk } from "$lib/ndk";
+  import { NDKNip07Signer } from "@nostr-dev-kit/ndk";
+  import { browser } from "$app/environment";
 
-  onMount(async () => {
-    await ndk?.connect();
+  onMount(() => {
+    if (browser) {
+      const useNip07Signer = JSON.parse(localStorage.getItem("wikinostr_usenip07") || 'false');
+      if (useNip07Signer) {
+        const signer = new NDKNip07Signer();
+        $ndk.signer = signer;
+        ndk.set($ndk);
+      }
+    }
   })
 </script>
 
@@ -23,7 +32,7 @@
         <button on:click={() => goto("/")} type="button" class="bg-white mr-2 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>          
         </button>
-        <Searchbar />
+        <!-- <Searchbar /> -->
       </div>
       <div class="ml-6 flex items-center">
         <button on:click={() => goto("/settings")} type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

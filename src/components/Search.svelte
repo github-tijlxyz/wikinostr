@@ -12,7 +12,7 @@
   async function search(query: string) {
     results = [];
     const filter = { kinds: [wikiKind], "#d": [query] };
-    const events = await ndk?.fetchEvents(filter);
+    const events = await $ndk.fetchEvents(filter);
     if (!events) {
       tried = 1;
       results = [];

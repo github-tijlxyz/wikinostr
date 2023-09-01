@@ -3,12 +3,11 @@
   import { wikiKind } from "$lib/consts";
   import { NDKEvent } from "@nostr-dev-kit/ndk";
 
-  export let startName: undefined | string;
   export let startTitle: undefined | string;
   export let startSummary: undefined | string;
   export let startContent: undefined | string;
+  export let startD: undefined | string;
 
-  let articleName: string = "";
   let articleTitle: string = "";
   let articleSummary: string = "";
   let articleContent: string = "";
@@ -16,8 +15,8 @@
   let success = 0;
   let error: string = "";
 
-  if (startName) {
-    articleName = startName;
+  if (startD) {
+    articleTitle = startD;
   }
   if (startTitle) {
     articleTitle = startTitle;
@@ -31,10 +30,10 @@
 
   async function publish() {
     try {
-      let event = new NDKEvent(ndk);
+      let event = new NDKEvent($ndk);
       event.kind = wikiKind;
       event.content = articleContent;
-      event.tags.push(["d", articleName]);
+      event.tags.push(["d", articleTitle.toLowerCase().replaceAll(" ", "-")]);
       event.tags.push(["title", articleTitle]);
       event.tags.push(["summary", articleSummary]);
       await event.publish();
@@ -49,13 +48,6 @@
 
 <!-- This component is WIP -->
 <div class="mx-4 mt-2">
-  <div>
-    <p class="text-sm">title/slug</p>
-    <input
-      placeholder="example: greek-alphabet"
-      bind:value={articleName} class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-    />
-  </div>
   <div>
     <p class="text-sm">Title</p>
     <input

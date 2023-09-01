@@ -21,10 +21,11 @@
     }
 
     function saveData () {
+        addRelay();
         localStorage.setItem("wikinostr_relays", JSON.stringify(relays));
         localStorage.setItem("wikinostr_usenip07", JSON.stringify(useNip07Signing));
         setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "";
         }, 1)
     }
 
@@ -34,7 +35,7 @@
     }
 </script>
 
-<h1>This component is WIP</h1> <!-- TODO, make a user change relays ( and also TODO display "found on" relays for articles )-->
+<!-- This component is WIP -->
 <div class="p-6">
 
     <!-- Use NIP07 Login -->
