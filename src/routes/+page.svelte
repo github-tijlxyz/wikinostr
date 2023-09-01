@@ -6,8 +6,6 @@
 
 <div class="flex overflow-x-scroll pb-2 scroll-smooth">
   {#each $tabs as tab (tab.id)}
-    <div id={`wikitab-v0-${tab.id}`}>
-      <Tab {tab} />
-    </div>
+    <Tab {tab} />
   {/each}
 </div>

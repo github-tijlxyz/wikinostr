@@ -10,10 +10,14 @@
   })
 </script>
 
+<svelte:head>
+  <title>WikiNostr</title>
+</svelte:head>
+
 <slot />
 
 <nav class="bg-white bottom-0 absolute w-full">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-[256rem] mx-auto px-4">
     <div class="flex justify-between h-16">
       <div class="flex items-center">
         <Searchbar />

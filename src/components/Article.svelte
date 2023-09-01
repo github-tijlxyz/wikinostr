@@ -52,17 +52,9 @@
         {:catch error}
           error while loading user
         {/await}
-        {#if event?.tags.find((e) => e[0] == "published_at") && !isNaN(Number(event.tags.find((e) => e[0] == "published_at")?.[1]))}
-          updated on {formatDate(
-            Number(event.tags.find((e) => e[0] == "published_at")?.[1])
-          )}
+        {#if event.created_at}
+          updated on {formatDate(event.created_at)}
         {/if}
-        <br />
-        <div class="inline">
-          <a href={`/fork/${event.id}`}>Fork</a>
-          <span> - </span>
-          <a>Share</a>
-        </div>
       </span>
 
       {@html parse(event?.content)}

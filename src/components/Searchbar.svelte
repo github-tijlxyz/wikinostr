@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
-  import { page } from "$app/stores";
   import { tabs } from "$lib/state";
   import { generateRandomNumber, scrollTabIntoView } from "$lib/utils";
   import type { Tab } from "$lib/types";
