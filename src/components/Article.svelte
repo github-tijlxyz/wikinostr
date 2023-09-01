@@ -45,7 +45,7 @@
         {#await event.author?.fetchProfile()}
           by <span>loading...</span>
         {:then profile}
-          by <a href={`nostr://${event.author.npub}`}
+          by <a href={`nostr:${event.author.npub}`}
             >{profile !== null &&
               JSON.parse(Array.from(profile)[0]?.content)?.name}</a
           >,

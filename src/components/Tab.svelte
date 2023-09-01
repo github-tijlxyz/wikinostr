@@ -68,18 +68,17 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
-  onMount(() => {
-    console.log("say hello to tab", tab);
+  // onMount(() => {
     if (tab.type == "welcome") {
       // TODO IMPORTANT: change welcome wiki article (to a REAL wiki article)
       idtoload =
-        "71d2e6dd4db41cf74d1dbda8e64802b880c1d56e08249fe26ee37c75bc48de4b";
+        "657faadfe17e0fb2358b4a5c5fdeff5b54ad61e2a0fa07ac80a7d31077b688db";
     } else if (tab.type == "articlefind") {
       searchquerytoload = tab.data;
     } else if (tab.type == "article") {
       idtoload = tab.data;
     }
-  });
+  // });
 </script>
 
 <div
