@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tabs } from '$lib/state';
-  import type { Tab } from '$lib/types';
+  import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
   import Article from './Article.svelte';
   import Search from './Search.svelte';
@@ -15,11 +15,10 @@
     }
   }
 
-  function createChild(type: string, data: string) {
-    // Create child
+  function createChild(type: TabType, data: string) {
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
-      const newChild = {
+      const newChild: Tab = {
         id: generateRandomNumber(),
         parent: tab.id,
         type: type,
@@ -31,7 +30,7 @@
     }
   }
 
-  function replaceSelf(newType: string, newData: string) {
+  function replaceSelf(newType: TabType, newData: string) {
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
       const newTabs = $tabs.slice();
@@ -42,7 +41,7 @@
           newTabs.splice(childIndex, 1);
         }
       });
-      const updatedTab = {
+      const updatedTab: Tab = {
         id: generateRandomNumber(),
         type: newType,
         data: newData

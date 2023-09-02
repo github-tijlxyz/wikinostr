@@ -1,6 +1,8 @@
 export type Tab = {
   id: number;
-  type: 'welcome' | 'articlefind' | 'article';
+  type: TabType;
   parent?: number;
   data?: string;
 };
+
+export type TabType = 'welcome' | 'articlefind' | 'article';
