@@ -1,13 +1,30 @@
 <script lang="ts">
-  import Tab from '../components/Tab.svelte';
+  import TabElement from '../components/Tab.svelte';
   import { tabs } from '$lib/state';
   import Searchbar from '../components/Searchbar.svelte';
-  import { scrollTabIntoView } from '$lib/utils';
+  import { scrollTabIntoView, generateRandomNumber } from '$lib/utils';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+  import type { Tab } from '$lib/types';
+
+  onMount(() => {
+    let openShareArticle = $page.url.searchParams.get('d') || undefined; // d = default/welcome tab to load
+    if (openShareArticle) {
+      let newTab: Tab = { id: generateRandomNumber(), type: 'article', data: openShareArticle };
+      $tabs.push(newTab);
+      tabs.set($tabs);
+      scrollTabIntoView(String(newTab.id));
+    } else {
+      let newTab: Tab = { id: 0, type: 'welcome' };
+      $tabs.push(newTab);
+      tabs.set($tabs);
+    }
+  });
 </script>
 
 <div class="flex overflow-x-scroll pb-2 scroll-smooth">
   {#each $tabs as tab (tab.id)}
-    <Tab {tab} />
+    <TabElement {tab} />
   {/each}
   <!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
   <div

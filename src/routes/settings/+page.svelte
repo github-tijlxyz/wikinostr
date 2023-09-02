@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { standardRelays } from '$lib/consts';
-  import BackButton from "../../components/BackButton.svelte";
+  import BackButton from '../../components/BackButton.svelte';
 
   let relays: string[] = [];
   let newRelay = '';

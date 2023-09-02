@@ -5,10 +5,12 @@
   import { formatDate } from '$lib/utils';
   import { parse } from '$lib/articleParser.js';
   import type { TabType } from '$lib/types';
+    import { page } from '$app/stores';
 
   export let eventid: string;
   export let createChild: (type: TabType, data: string) => void;
   let event: NDKEvent | null = null;
+  let copied = false;
 
   function addClickListenerToWikilinks() {
     const elements = document.querySelectorAll('[id^="wikilink-v0-"]');
@@ -20,6 +22,14 @@
         createChild('articlefind', a);
       });
     });
+  }
+
+  function shareCopy() {
+    navigator.clipboard.writeText(`https://${$page.url.hostname}/?d=${eventid}`);
+    copied = true;
+    setTimeout(() => {
+      copied = false;
+    }, 2500);
   }
 
   onMount(async () => {
@@ -53,6 +63,9 @@
           updated on {formatDate(event.created_at)}
         {/if}
         &nbsp;• &nbsp;<a href={`/fork/${eventid}`}>Fork</a>
+        &nbsp;•&nbsp;<a class="cursor-pointer" on:click={shareCopy}
+          >{#if copied}Copied!{:else}Share{/if}</a
+        >
       </span>
 
       <!-- Content -->
