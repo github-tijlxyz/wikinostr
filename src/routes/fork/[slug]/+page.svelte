@@ -2,6 +2,7 @@
   import { ndk } from "$lib/ndk.js";
   import { onMount } from "svelte";
   import Editor from "../../../components/Editor.svelte";
+  import BackButton from "../../../components/BackButton.svelte";
 
   export let data;
   let startD: undefined | string = undefined;
@@ -21,6 +22,8 @@
     else startContent = event?.content;
   });
 </script>
+
+<BackButton />
 
 {#if startContent}
   <Editor {startD} {startTitle} {startContent} {startSummary} />
