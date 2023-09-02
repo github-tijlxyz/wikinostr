@@ -23,7 +23,7 @@
   }
 
   onMount(async () => {
-    await search(query);
+    await search("StarCraft");
   });
 </script>
 
@@ -42,7 +42,7 @@
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>
-        {result.tags.find((e) => e[0] == 'title') !== undefined
+        {result.tags.find((e) => e[0] == 'title')?.[0] && result.tags.find((e) => e[0] == 'title')?.[1]
           ? result.tags.find((e) => e[0] == 'title')?.[1]
           : result.tags.find((e) => e[0] == 'd')?.[1]}
       </h1>
@@ -58,7 +58,7 @@
         {/await}
       </p>
       <p class="text-xs">
-        {#if result.tags.find((e) => e[0] == 'summary')}
+        {#if result.tags.find((e) => e[0] == 'summary')?.[0] && result.tags.find((e) => e[0] == 'summary')?.[1]}
           {result.tags
             .find((e) => e[0] == 'summary')?.[1]
             .slice(
@@ -67,7 +67,7 @@
             )}{#if String(result.tags.find((e) => e[0] == 'summary')?.[1])?.length > 192}...{/if}
         {:else}
           {result.content.length <= 192
-            ? result.content.length
+            ? result.content
             : result.content.slice(0, 189) + '...'}
         {/if}
       </p>

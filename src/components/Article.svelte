@@ -6,7 +6,6 @@
   import { parse } from "$lib/articleParser.js";
 
   export let eventid: string;
-  export let tabid: number;
   export let createChild: (type: string, data: string) => void;
   let event: NDKEvent | null = null;
 
@@ -35,7 +34,7 @@
   <article class="prose font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
     {#if event !== null}
       <h1 class="mb-0">
-        {#if event?.tags.find((e) => e[0] == "title")?.[0]}
+        {#if event?.tags.find((e) => e[0] == "title")?.[0] && event?.tags.find((e) => e[0] == "title")?.[1]}
           {event.tags.find((e) => e[0] == "title")?.[1]}
         {:else}
           {event.tags.find((e) => e[0] == "d")?.[1]}
@@ -56,6 +55,7 @@
         &nbsp;• &nbsp;<a href={`/fork/${eventid}`}>Fork</a>
       </span>
 
+      <!-- Content -->
       {@html parse(event?.content)}
     {/if}
   </article>

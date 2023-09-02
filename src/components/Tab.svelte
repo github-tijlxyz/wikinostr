@@ -86,7 +86,7 @@
     ></button
   >
   {#if idtoload}
-    <Article {createChild} eventid={idtoload} tabid={tab.id} />
+    <Article {createChild} eventid={idtoload} />
   {/if}
 
   {#if searchquerytoload}
