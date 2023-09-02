@@ -4,9 +4,10 @@
   import type { NDKEvent } from "@nostr-dev-kit/ndk";
   import { formatDate } from "$lib/utils";
   import { parse } from "$lib/articleParser.js";
+  import type { TabType } from "$lib/types";
 
   export let eventid: string;
-  export let createChild: (type: string, data: string) => void;
+  export let createChild: (type: TabType, data: string) => void;
   let event: NDKEvent | null = null;
 
   function addClickListenerToWikilinks() {

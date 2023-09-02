@@ -3,9 +3,10 @@
   import { wikiKind } from '$lib/consts';
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
   import { onMount } from 'svelte';
+  import type { TabType } from '$lib/types';
 
   export let query: string;
-  export let replaceSelf: (newType: string, newData: string) => void;
+  export let replaceSelf: (newType: TabType, newData: string) => void;
   let results: NDKEvent[] = [];
   let tried = 0;
 
