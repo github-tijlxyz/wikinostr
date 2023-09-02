@@ -22,7 +22,8 @@
 
 <slot />
 
-<nav class="bg-white bottom-0 absolute w-full">
+<!-- Bottom Navigation Bar -->
+<!-- <nav class="bg-white bottom-0 absolute w-full">
   <div class="max-w-[256rem] mx-auto px-4">
     <div class="flex justify-between h-16">
       <div class="flex items-center">
@@ -45,6 +46,7 @@
             /></svg
           >
         </button>
+        <Searchbar />
       </div>
       <div class="ml-6 flex items-center">
         <button
@@ -81,4 +83,4 @@
       </div>
     </div>
   </div>
-</nav>
+</nav> -->

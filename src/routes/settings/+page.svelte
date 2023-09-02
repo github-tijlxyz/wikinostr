@@ -1,6 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { standardRelays } from '$lib/consts';
+  import BackButton from "../../components/BackButton.svelte";
 
   let relays: string[] = [];
   let newRelay = '';
@@ -31,7 +32,9 @@
   }
 </script>
 
-<div class="p-6">
+<BackButton />
+
+<div class="mx-4 mt-4 w-5/6">
   <!-- Relay Selection -->
   <div class="mb-6">
     <p class="text-sm">Relays</p>

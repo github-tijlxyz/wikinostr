@@ -54,7 +54,7 @@
   }
 </script>
 
-<div class="mx-4 mt-4 w-5/6 mx-auto">
+<div class="mx-4 mt-4 w-5/6">
   <h2 class="mt-2">Creating an article</h2>
 
   <div class="mt-2">
