@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { ndk } from "$lib/ndk";
-  import { wikiKind } from "$lib/consts";
-  import type { NDKEvent, NDKFilter } from "@nostr-dev-kit/ndk";
-  import { onMount } from "svelte";
+  import { ndk } from '$lib/ndk';
+  import { wikiKind } from '$lib/consts';
+  import type { NDKEvent } from '@nostr-dev-kit/ndk';
+  import { onMount } from 'svelte';
 
   export let query: string;
   export let replaceSelf: (newType: string, newData: string) => void;
@@ -11,7 +11,7 @@
 
   async function search(query: string) {
     results = [];
-    const filter = { kinds: [wikiKind], "#d": [query] };
+    const filter = { kinds: [wikiKind], '#d': [query] };
     const events = await $ndk.fetchEvents(filter);
     if (!events) {
       tried = 1;
@@ -31,21 +31,20 @@
   <div class="prose">
     <h1 class="mb-0">{query}</h1>
     <p class="mt-0 mb-0">
-      There are {#if tried == 1}{results.length}{:else}...{/if} articles with the
-      name "{query}"
+      There are {#if tried == 1}{results.length}{:else}...{/if} articles with the name "{query}"
     </p>
   </div>
   {#each results as result}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      on:click={() => replaceSelf("article", result.id)}
+      on:click={() => replaceSelf('article', result.id)}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>
-        {result.tags.find((e) => e[0] == "title") !== undefined
-          ? result.tags.find((e) => e[0] == "title")?.[1]
-          : result.tags.find((e) => e[0] == "d")?.[1]}
+        {result.tags.find((e) => e[0] == 'title') !== undefined
+          ? result.tags.find((e) => e[0] == 'title')?.[1]
+          : result.tags.find((e) => e[0] == 'd')?.[1]}
       </h1>
       <p class="text-xs">
         <!-- implement published at? -->
@@ -55,30 +54,29 @@
         {#await result.author?.fetchProfile()}
           by <span class="text-gray-600 font-[600]">...</span>
         {:then result}
-          by {result !== null &&
-            JSON.parse(Array.from(result)[0]?.content)?.name}
+          by {result !== null && JSON.parse(Array.from(result)[0]?.content)?.name}
         {/await}
       </p>
-      {#if result.tags.find((e) => e[0] == "summary")}
-        <p class="text-xs">
+      <p class="text-xs">
+        {#if result.tags.find((e) => e[0] == 'summary')}
           {result.tags
-            .find((e) => e[0] == "summary")?.[1]
+            .find((e) => e[0] == 'summary')?.[1]
             .slice(
               0,
               192
-            )}{#if String(result.tags.find((e) => e[0] == "summary")?.[1])?.length > 192}...{/if}
-        </p>
-      {/if}
+            )}{#if String(result.tags.find((e) => e[0] == 'summary')?.[1])?.length > 192}...{/if}
+        {:else}
+          {result.content.length <= 192
+            ? result.content.length
+            : result.content.slice(0, 189) + '...'}
+        {/if}
+      </p>
     </div>
   {/each}
   {#if tried == 1}
-    <div
-      class="px-4 py-5 bg-white border border-gray-300 rounded-lg mt-2 min-h-[48px]"
-    >
+    <div class="px-4 py-5 bg-white border border-gray-300 rounded-lg mt-2 min-h-[48px]">
       <p class="mb-2">
-        {results.length < 1
-          ? "Can't find this article"
-          : "Didn't find what you are looking for?"}
+        {results.length < 1 ? "Can't find this article" : "Didn't find what you are looking for?"}
       </p>
       <a
         href={`/new?n=${query}`}

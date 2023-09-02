@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { ndk } from "$lib/ndk";
-  import { wikiKind } from "$lib/consts";
-  import { NDKEvent } from "@nostr-dev-kit/ndk";
+  import { ndk } from '$lib/ndk';
+  import { wikiKind } from '$lib/consts';
+  import { NDKEvent } from '@nostr-dev-kit/ndk';
 
   export let startTitle: undefined | string;
   export let startSummary: undefined | string;
   export let startContent: undefined | string;
   export let startD: undefined | string;
 
-  let articleTitle: string = "";
-  let articleSummary: string = "";
-  let articleContent: string = "";
+  let articleTitle: string = '';
+  let articleSummary: string = '';
+  let articleContent: string = '';
 
   let success = 0;
-  let error: string = "";
+  let error: string = '';
 
   if (startD) {
     articleTitle = startD;
@@ -33,13 +33,21 @@
       let event = new NDKEvent($ndk);
       event.kind = wikiKind;
       event.content = articleContent;
-      event.tags.push(["d", articleTitle.toLowerCase().replaceAll(" ", "-")]);
-      event.tags.push(["title", articleTitle]);
-      event.tags.push(["summary", articleSummary]);
-      await event.publish();
+      event.tags.push(['d', articleTitle.toLowerCase().replaceAll(' ', '-')]);
+      event.tags.push(['title', articleTitle]);
+      event.tags.push(['summary', articleSummary]);
+      let relays = await event.publish();
+      relays.forEach((relay) => {
+        relay.once('published', () => {
+          console.log('published to', relay);
+        });
+        relay.once('publish:failed', (relay, err) => {
+          console.log('publish failed to', relay, err);
+        });
+      });
       success = 1;
     } catch (err) {
-      console.log("failed to publish event", error);
+      console.log('failed to publish event', error);
       error = String(err);
       success = -1;
     }
@@ -47,43 +55,48 @@
 </script>
 
 <!-- This component is WIP -->
-<div class="mx-4 mt-2">
-  <div>
-    <p class="text-sm">Title</p>
-    <input
-      placeholder="example: Greek alphabet"
-      bind:value={articleTitle}
-      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-    />
+<div class="mx-4 mt-4 w-5/6 mx-auto">
+  <h2 class="mt-2">Creating an article</h2>
+
+  <div class="mt-2">
+    <label class="flex items-center"
+      >Title
+      <input
+        placeholder="example: Greek alphabet"
+        bind:value={articleTitle}
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md ml-2"
+      /></label
+    >
   </div>
-  <div>
-    <p class="text-sm">Summary</p>
-    <textarea
-      bind:value={articleSummary}
-      rows="3"
-      placeholder="example: The Greek alphabet is the earliest known alphabetic script to have distict letters for vowels. The Greek alphabet existed in many local variants."
-      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-    />
+  <div class="mt-2">
+    <label
+      >Article
+      <textarea
+        placeholder="The **Greek alphabet** has been used to write the [[Greek language]] sincie the late 9th or early 8th century BC. The Greek alphabet is the ancestor of the [[Latin]] and [[Cyrillic]] scripts."
+        bind:value={articleContent}
+        rows="9"
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      /></label
+    >
   </div>
-  <div>
-    <p class="text-sm">Article</p>
-    <p class="text-sm">
-      Write it in markdown, use [[these]] links to link to other articles
-    </p>
-    <textarea
-      placeholder="example: The **Greek alphabet** has been used to write the [[Greek language]] sincie the late 9th or early 8th century BC. The Greek alphabet is the ancestor of the [[Latin]] and [[Cyrillic]] scripts."
-      bind:value={articleContent}
-      rows="9"
-      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-    />
+  <div class="mt-2">
+    <details>
+      <summary> Add an explicit summary? </summary>
+      <label
+        >Summary
+        <textarea
+          bind:value={articleSummary}
+          rows="3"
+          placeholder="The Greek alphabet is the earliest known alphabetic script to have distict letters for vowels. The Greek alphabet existed in many local variants."
+          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        /></label
+      >
+      <details></details>
+    </details>
   </div>
 
   <!-- Submit -->
   {#if success !== 1}
-    <p class="text-sm font-[16px] font-semibold">
-      Please remember that only NIP07 is supported for now. And please enable
-      NIP07 in the <a href="/settings">settings</a>!
-    </p>
     <div class="mt-2">
       <button
         on:click={publish}

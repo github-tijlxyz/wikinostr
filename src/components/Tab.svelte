@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { tabs } from "$lib/state";
-  import type { Tab } from "$lib/types";
-  import { generateRandomNumber, scrollTabIntoView } from "$lib/utils";
-  import Article from "./Article.svelte";
-  import Search from "./Search.svelte";
+  import { tabs } from '$lib/state';
+  import type { Tab } from '$lib/types';
+  import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
+  import Article from './Article.svelte';
+  import Search from './Search.svelte';
   export let tab: Tab;
 
   function removeSelf() {
@@ -23,7 +23,7 @@
         id: generateRandomNumber(),
         parent: tab.id,
         type: type,
-        data: data,
+        data: data
       };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
@@ -45,7 +45,7 @@
       const updatedTab = {
         id: generateRandomNumber(),
         type: newType,
-        data: newData,
+        data: newData
       };
       newTabs[index] = updatedTab;
       tabs.set(newTabs);
@@ -55,12 +55,11 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
-  if (tab.type == "welcome") {
-    idtoload =
-      "e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492";
-  } else if (tab.type == "articlefind") {
+  if (tab.type == 'welcome') {
+    idtoload = 'e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492';
+  } else if (tab.type == 'articlefind') {
     searchquerytoload = tab.data;
-  } else if (tab.type == "article") {
+  } else if (tab.type == 'article') {
     idtoload = tab.data;
   }
 </script>
@@ -68,7 +67,7 @@
 <div
   id={`wikitab-v0-${tab.id}`}
   class="
-  overflow-y-scroll
+  overflow-y-auto
   overflow-x-hidden
   mx-2 p-4 mt-2
   min-w-[365px] max-w-[365px] lg:min-w-[32rem] lg:max-w-[32rem]
@@ -83,11 +82,7 @@
       stroke-width="1.5"
       stroke="currentColor"
       class="w-6 h-6"
-      ><path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M6 18L18 6M6 6l12 12"
-      /></svg
+      ><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
     ></button
   >
   {#if idtoload}

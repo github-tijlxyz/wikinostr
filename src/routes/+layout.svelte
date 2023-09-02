@@ -1,11 +1,11 @@
 <script>
-  import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
-  import { browser } from "$app/environment";
-  import { ndk } from "$lib/ndk";
-  import { NDKNip07Signer } from "@nostr-dev-kit/ndk";
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { browser } from '$app/environment';
+  import { ndk } from '$lib/ndk';
+  import { NDKNip07Signer } from '@nostr-dev-kit/ndk';
 
-  import "../app.postcss";
+  import '../app.postcss';
 
   onMount(() => {
     if (browser) {
@@ -27,7 +27,7 @@
     <div class="flex justify-between h-16">
       <div class="flex items-center">
         <button
-          on:click={() => goto("/")}
+          on:click={() => goto('/')}
           type="button"
           class="bg-white mr-2 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
@@ -49,7 +49,7 @@
       </div>
       <div class="ml-6 flex items-center">
         <button
-          on:click={() => goto("/settings")}
+          on:click={() => goto('/settings')}
           type="button"
           class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
@@ -74,7 +74,7 @@
 
         <div class="ml-3 relative">
           <button
-            on:click={() => goto("/new")}
+            on:click={() => goto('/new')}
             class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >New</button
           >

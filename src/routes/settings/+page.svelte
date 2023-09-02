@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
-  import { standardRelays } from "$lib/consts";
-  import { onMount } from "svelte";
+  import { browser } from '$app/environment';
+  import { standardRelays } from '$lib/consts';
 
   let relays: string[] = [];
-  let newRelay = "";
+  let newRelay = '';
 
   function removeRelay(index: number) {
     relays.splice(index, 1);
@@ -14,23 +13,21 @@
   function addRelay() {
     if (newRelay) {
       relays.push(newRelay);
-      newRelay = "";
+      newRelay = '';
       relays = [...relays];
     }
   }
 
   function saveData() {
     addRelay();
-    localStorage.setItem("wikinostr_relays", JSON.stringify(relays));
+    localStorage.setItem('wikinostr_relays', JSON.stringify(relays));
     setTimeout(() => {
-      window.location.href = "";
+      window.location.href = '';
     }, 1);
   }
 
   if (browser) {
-    relays = JSON.parse(
-      localStorage.getItem("wikinostr_relays") || JSON.stringify(standardRelays)
-    );
+    relays = JSON.parse(localStorage.getItem('wikinostr_relays') || JSON.stringify(standardRelays));
   }
 </script>
 
@@ -40,9 +37,7 @@
     <p class="text-sm">Relays</p>
     {#each relays as relay, index}
       <div>
-        <button class="text-red-500" on:click={() => removeRelay(index)}>
-          -
-        </button>
+        <button class="text-red-500" on:click={() => removeRelay(index)}> - </button>
         {relay}
       </div>
     {/each}

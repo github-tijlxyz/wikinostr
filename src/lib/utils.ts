@@ -1,7 +1,17 @@
 export function formatDate(unixtimestamp: number) {
   const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
   ];
 
   const date = new Date(unixtimestamp * 1000);
@@ -31,8 +41,8 @@ export function scrollTabIntoView(id: string) {
     const elements = document.querySelectorAll(`[id^="wikitab-v0-${id}"]`);
     if (!elements[0]) return;
     elements[0].scrollIntoView({
-      behavior: "smooth",
-      inline: "start"
+      behavior: 'smooth',
+      inline: 'start'
     });
-  }, 1)
+  }, 1);
 }
