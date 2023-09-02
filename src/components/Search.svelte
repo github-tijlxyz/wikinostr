@@ -23,7 +23,7 @@
   }
 
   onMount(async () => {
-    await search("StarCraft");
+    await search(query);
   });
 </script>
 
