@@ -5,7 +5,7 @@
   import { formatDate } from '$lib/utils';
   import { parse } from '$lib/articleParser.js';
   import type { TabType } from '$lib/types';
-    import { page } from '$app/stores';
+  import { page } from '$app/stores';
 
   export let eventid: string;
   export let createChild: (type: TabType, data: string) => void;
