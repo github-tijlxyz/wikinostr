@@ -54,7 +54,6 @@
   }
 </script>
 
-<!-- This component is WIP -->
 <div class="mx-4 mt-4 w-5/6 mx-auto">
   <h2 class="mt-2">Creating an article</h2>
 
@@ -91,7 +90,6 @@
           class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         /></label
       >
-      <details></details>
     </details>
   </div>
 
