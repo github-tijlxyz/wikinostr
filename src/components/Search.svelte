@@ -36,14 +36,14 @@
     </p>
   </div>
   {#each results as result}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
     <div
       on:click={() => replaceSelf('article', result.id)}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>
-        {result.tags.find((e) => e[0] == 'title')?.[0] && result.tags.find((e) => e[0] == 'title')?.[1]
+        {result.tags.find((e) => e[0] == 'title')?.[0] &&
+        result.tags.find((e) => e[0] == 'title')?.[1]
           ? result.tags.find((e) => e[0] == 'title')?.[1]
           : result.tags.find((e) => e[0] == 'd')?.[1]}
       </h1>
@@ -67,9 +67,7 @@
               192
             )}{#if String(result.tags.find((e) => e[0] == 'summary')?.[1])?.length > 192}...{/if}
         {:else}
-          {result.content.length <= 192
-            ? result.content
-            : result.content.slice(0, 189) + '...'}
+          {result.content.length <= 192 ? result.content : result.content.slice(0, 189) + '...'}
         {/if}
       </p>
     </div>

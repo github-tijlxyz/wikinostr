@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { ndk } from "$lib/ndk";
-  import { afterUpdate, onMount } from "svelte";
-  import type { NDKEvent } from "@nostr-dev-kit/ndk";
-  import { formatDate } from "$lib/utils";
-  import { parse } from "$lib/articleParser.js";
-  import type { TabType } from "$lib/types";
+  import { ndk } from '$lib/ndk';
+  import { afterUpdate, onMount } from 'svelte';
+  import type { NDKEvent } from '@nostr-dev-kit/ndk';
+  import { formatDate } from '$lib/utils';
+  import { parse } from '$lib/articleParser.js';
+  import type { TabType } from '$lib/types';
 
   export let eventid: string;
   export let createChild: (type: TabType, data: string) => void;
@@ -14,10 +14,10 @@
     const elements = document.querySelectorAll('[id^="wikilink-v0-"]');
 
     elements.forEach((element) => {
-      element.addEventListener("click", () => {
+      element.addEventListener('click', () => {
         //alert(`Clicked element with ID: ${element.id}`);
         let a = element.id.slice(12);
-        createChild("articlefind", a);
+        createChild('articlefind', a);
       });
     });
   }
@@ -35,10 +35,10 @@
   <article class="prose font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
     {#if event !== null}
       <h1 class="mb-0">
-        {#if event?.tags.find((e) => e[0] == "title")?.[0] && event?.tags.find((e) => e[0] == "title")?.[1]}
-          {event.tags.find((e) => e[0] == "title")?.[1]}
+        {#if event?.tags.find((e) => e[0] == 'title')?.[0] && event?.tags.find((e) => e[0] == 'title')?.[1]}
+          {event.tags.find((e) => e[0] == 'title')?.[1]}
         {:else}
-          {event.tags.find((e) => e[0] == "d")?.[1]}
+          {event.tags.find((e) => e[0] == 'd')?.[1]}
         {/if}
       </h1>
       <span>
@@ -46,8 +46,7 @@
           by <a href={`nostr:${event.author.npub}`}>...</a>,
         {:then profile}
           by <a href={`nostr:${event.author.npub}`}
-            >{profile !== null &&
-              JSON.parse(Array.from(profile)[0]?.content)?.name}</a
+            >{profile !== null && JSON.parse(Array.from(profile)[0]?.content)?.name}</a
           >,
         {/await}
         {#if event.created_at}

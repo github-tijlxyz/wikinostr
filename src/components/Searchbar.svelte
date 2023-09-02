@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { tabs } from "$lib/state";
-  import { generateRandomNumber, scrollTabIntoView } from "$lib/utils";
-  import type { Tab } from "$lib/types";
+  import { tabs } from '$lib/state';
+  import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
+  import type { Tab } from '$lib/types';
 
-  let query = "";
+  let query = '';
 
   function search() {
     if (query) {
       let newTabs = $tabs;
       const newTab: Tab = {
         id: generateRandomNumber(),
-        type: "articlefind",
-        data: query.toLowerCase().replaceAll(" ", "-"),
+        type: 'articlefind',
+        data: query.toLowerCase().replaceAll(' ', '-')
       };
       newTabs.push(newTab);
       tabs.set(newTabs);
