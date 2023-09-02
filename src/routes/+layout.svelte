@@ -45,7 +45,6 @@
             /></svg
           >
         </button>
-        <!-- <Searchbar /> -->
       </div>
       <div class="ml-6 flex items-center">
         <button

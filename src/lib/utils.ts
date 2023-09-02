@@ -36,13 +36,26 @@ export function generateRandomNumber(): number {
   return randomNumber;
 }
 
-export function scrollTabIntoView(id: string) {
+export function scrollTabIntoView(el: string | HTMLElement) {
   setTimeout(() => {
-    const elements = document.querySelectorAll(`[id^="wikitab-v0-${id}"]`);
-    if (!elements[0]) return;
-    elements[0].scrollIntoView({
+    const element =
+      typeof el === 'string' ? document.querySelector(`[id^="wikitab-v0-${el}"]`) : el;
+    if (!element) return;
+
+    element.scrollIntoView({
       behavior: 'smooth',
       inline: 'start'
     });
   }, 1);
+}
+
+export function isElementInViewport(el: HTMLElement) {
+  const rect = el.getBoundingClientRect();
+
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
 }

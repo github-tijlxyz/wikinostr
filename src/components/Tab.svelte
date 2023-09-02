@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tabs } from '$lib/state';
   import type { Tab, TabType } from '$lib/types';
-  import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
+  import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
   import Article from './Article.svelte';
   import Search from './Search.svelte';
   export let tab: Tab;
@@ -61,8 +61,13 @@
   } else if (tab.type == 'article') {
     idtoload = tab.data;
   }
+
+  function handleClick(ev: { currentTarget: HTMLElement }) {
+    if (!isElementInViewport(ev.currentTarget)) scrollTabIntoView(ev.currentTarget);
+  }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
 <div
   id={`wikitab-v0-${tab.id}`}
   class="
@@ -72,6 +77,7 @@
   min-w-[365px] max-w-[365px] lg:min-w-[32rem] lg:max-w-[32rem]
   rounded-lg border border-slate-500 bg-slate-50
   h-[calc(100vh_-_64px_-_32px)]"
+  on:click={handleClick}
 >
   <button on:click={removeSelf}
     ><svg
