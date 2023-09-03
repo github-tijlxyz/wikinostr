@@ -2,12 +2,13 @@
   import { wikiKind } from '$lib/consts';
   import { ndk } from '$lib/ndk';
   import { tabs } from '$lib/state';
-  import type { Tab } from '$lib/types';
+  import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
   import { onMount } from 'svelte';
 
   let results: NDKEvent[] = [];
+  export let createChild: (type: TabType, data: string) => void;
 
   async function search() {
     results = [];
@@ -18,18 +19,6 @@
       return;
     }
     results = Array.from(events);
-  }
-
-  function open(articleId: string) {
-    let newTabs = $tabs;
-    const newTab: Tab = {
-      id: generateRandomNumber(),
-      type: 'article',
-      data: articleId
-    };
-    newTabs.push(newTab);
-    tabs.set(newTabs);
-    scrollTabIntoView(String(newTab.id));
   }
 
   onMount(async () => {
@@ -44,7 +33,7 @@
   {#each results as result}
     <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
     <div
-      on:click={() => open(result.id)}
+      on:click={() => createChild('article', result.id)}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>

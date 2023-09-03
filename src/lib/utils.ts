@@ -36,8 +36,8 @@ export function generateRandomNumber(): number {
   return randomNumber;
 }
 
-export function scrollTabIntoView(el: string | HTMLElement) {
-  setTimeout(() => {
+export function scrollTabIntoView(el: string | HTMLElement, wait: boolean) {
+  function scrollTab() {
     const element =
       typeof el === 'string' ? document.querySelector(`[id^="wikitab-v0-${el}"]`) : el;
     if (!element) return;
@@ -46,7 +46,15 @@ export function scrollTabIntoView(el: string | HTMLElement) {
       behavior: 'smooth',
       inline: 'start'
     });
-  }, 1);
+  }
+
+  if (wait) {
+    setTimeout(() => {
+      scrollTab();
+    }, 1);
+  } else {
+    scrollTab();
+  }
 }
 
 export function isElementInViewport(el: HTMLElement) {

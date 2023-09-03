@@ -15,7 +15,7 @@
       };
       newTabs.push(newTab);
       tabs.set(newTabs);
-      scrollTabIntoView(String(newTab.id));
+      scrollTabIntoView(String(newTab.id), true);
     }
   }
 </script>

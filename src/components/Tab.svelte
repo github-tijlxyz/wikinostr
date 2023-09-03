@@ -3,7 +3,7 @@
   import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
   import Article from './Article.svelte';
-    import RecentArticles from './RecentArticles.svelte';
+  import RecentArticles from './RecentArticles.svelte';
   import Search from './Search.svelte';
   export let tab: Tab;
 
@@ -27,7 +27,7 @@
       };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
-      setTimeout(() => scrollTabIntoView(String(newChild.id)), 5);
+      setTimeout(() => scrollTabIntoView(String(newChild.id), true), 5);
     }
   }
 
@@ -62,7 +62,7 @@
   }
 
   function handleClick(ev: { currentTarget: HTMLElement }) {
-    if (!isElementInViewport(ev.currentTarget)) scrollTabIntoView(ev.currentTarget);
+    if (!isElementInViewport(ev.currentTarget)) scrollTabIntoView(ev.currentTarget, false);
   }
 </script>
 
@@ -97,11 +97,11 @@
     <Search {replaceSelf} query={searchquerytoload} />
   {/if}
 
-  {#if tab.type == "welcome"}
-    <RecentArticles />
+  {#if tab.type == 'welcome'}
+    <RecentArticles {createChild} />
   {/if}
 
-  {#if !idtoload && !searchquerytoload && tab.type !== "welcome"}
+  {#if !idtoload && !searchquerytoload && tab.type !== 'welcome'}
     <div class="p-6">Loading...</div>
   {/if}
 </div>
