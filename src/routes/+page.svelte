@@ -8,16 +8,18 @@
   import type { Tab } from '$lib/types';
 
   onMount(() => {
-    let openShareArticle = $page.url.searchParams.get('d') || undefined; // d = default/welcome tab to load
-    if (openShareArticle) {
-      let newTab: Tab = { id: generateRandomNumber(), type: 'article', data: openShareArticle };
-      $tabs.push(newTab);
-      tabs.set($tabs);
-      scrollTabIntoView(String(newTab.id));
-    } else {
-      let newTab: Tab = { id: 0, type: 'welcome' };
-      $tabs.push(newTab);
-      tabs.set($tabs);
+    if (!$tabs.find((e) => e.id == 0)) {
+      let openShareArticle = $page.url.searchParams.get('d') || undefined; // d = default/welcome tab to load
+      if (openShareArticle) {
+        let newTab: Tab = { id: 0, type: 'article', data: openShareArticle };
+        $tabs.push(newTab);
+        tabs.set($tabs);
+        scrollTabIntoView(String(newTab.id));
+      } else {
+        let newTab: Tab = { id: 0, type: 'welcome' };
+        $tabs.push(newTab);
+        tabs.set($tabs);
+      }
     }
   });
 </script>

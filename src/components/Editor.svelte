@@ -106,12 +106,14 @@
 
   <div>
     {#if success == -1}
-      <p>Something went wrong:(</p>
+      <p>
+        Something went wrong :( note that NIP07 browser extentions are only supported for signing
+      </p>
       <p>
         Error Message: {error}
       </p>
     {:else if success == 1}
-      <p>Success</p>
+      <p>Success!</p>
     {/if}
   </div>
 </div>

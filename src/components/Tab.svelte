@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { tijlPublicKeyHex, wikiKind } from '$lib/consts';
+  import { ndk } from '$lib/ndk';
   import { tabs } from '$lib/state';
   import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
@@ -54,8 +56,14 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
+  async function loadWelcomeArticle() {
+    const filter = { kinds: [wikiKind], '#d': ['wikinostr'], authors: [tijlPublicKeyHex] };
+    const result = await $ndk.fetchEvents(filter);
+    idtoload = Array.from(result)[0].id;
+  }
+
   if (tab.type == 'welcome') {
-    idtoload = 'e2f25e696746d18de3f11fc32a55b01123fc3bce10841808ad0dfdedee55c492';
+    loadWelcomeArticle();
   } else if (tab.type == 'articlefind') {
     searchquerytoload = tab.data;
   } else if (tab.type == 'article') {
@@ -96,5 +104,9 @@
 
   {#if searchquerytoload}
     <Search {replaceSelf} query={searchquerytoload} />
+  {/if}
+
+  {#if !idtoload && !searchquerytoload}
+    <div class="p-6">Loading...</div>
   {/if}
 </div>

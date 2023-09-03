@@ -63,7 +63,7 @@
           updated on {formatDate(event.created_at)}
         {/if}
         &nbsp;• &nbsp;<a href={`/fork/${eventid}`}>Fork</a>
-        &nbsp;•&nbsp;<a class="cursor-pointer" on:click={shareCopy}
+        &nbsp;• &nbsp;<a class="cursor-pointer" on:click={shareCopy}
           >{#if copied}Copied!{:else}Share{/if}</a
         >
       </span>
