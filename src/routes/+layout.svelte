@@ -18,7 +18,7 @@
 
 <svelte:head>
   <title>WikiNostr</title>
-  <meta name="description" content={`A "wikipedia" client for nostr`}>
+  <meta name="description" content={`A "wikipedia" client for nostr`} />
 </svelte:head>
 
 <slot />

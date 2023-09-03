@@ -29,9 +29,11 @@
       };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
-      if (isElementInViewport(String(newChild.id))) {
-        scrollTabIntoView(String(newChild.id), true);
-      } 
+      setTimeout(() => {
+        if (!isElementInViewport(String(newChild.id))) {
+          scrollTabIntoView(String(newChild.id), false);
+        }
+      }, 1);
     }
   }
 
