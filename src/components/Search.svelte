@@ -4,6 +4,7 @@
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
   import { onMount } from 'svelte';
   import type { TabType } from '$lib/types';
+  import { createChildEverywhere } from '$lib/state';
 
   export let query: string;
   export let replaceSelf: (newType: TabType, newData: string) => void;
@@ -39,7 +40,11 @@
   {#each results as result}
     <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
     <div
-      on:click={() => replaceSelf('article', result.id)}
+      on:click={() => {
+        $createChildEverywhere
+          ? createChild('article', result.id)
+          : replaceSelf('article', result.id);
+      }}
       class="cursor-pointer px-4 py-5 bg-white border border-gray-300 hover:bg-slate-50 rounded-lg mt-2 min-h-[48px]"
     >
       <h1>
@@ -79,7 +84,11 @@
         {results.length < 1 ? "Can't find this article" : "Didn't find what you are looking for?"}
       </p>
       <button
-        on:click={() => replaceSelf('editor', JSON.stringify({ startD: query }))}
+        on:click={() => {
+          $createChildEverywhere
+            ? replaceSelf('editor', JSON.stringify({ startD: query }))
+            : replaceSelf('editor', JSON.stringify({ startD: query }));
+        }}
         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Create this article!

@@ -1,8 +1,8 @@
 <script lang="ts">
   import TabElement from '../components/Tab.svelte';
-  import { tabs } from '$lib/state';
+  import { createChildEverywhere, tabs } from '$lib/state';
   import Searchbar from '../components/Searchbar.svelte';
-  import { scrollTabIntoView, generateRandomNumber } from '$lib/utils';
+  import { scrollTabIntoView } from '$lib/utils';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import type { Tab } from '$lib/types';
@@ -20,6 +20,10 @@
         $tabs.push(newTab);
         tabs.set($tabs);
       }
+    }
+
+    if ($page.url.searchParams.get('createChildEverywhere') !== null) {
+      createChildEverywhere.set(true);
     }
   });
 </script>

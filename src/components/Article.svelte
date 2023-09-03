@@ -6,6 +6,7 @@
   import { parse } from '$lib/articleParser.js';
   import type { TabType } from '$lib/types';
   import { page } from '$app/stores';
+  import { createChildEverywhere } from '$lib/state';
 
   export let eventid: string;
   export let createChild: (type: TabType, data: string) => void;
@@ -68,23 +69,22 @@
         {/if}
         &nbsp;• &nbsp;<a
           class="cursor-pointer"
-          on:click={() =>
-            replaceSelf(
-              'editor',
-              JSON.stringify({
-                startTitle:
-                  event?.tags.find((e) => e[0] == 'title')?.[0] &&
-                  event?.tags.find((e) => e[0] == 'title')?.[1]
-                    ? event.tags.find((e) => e[0] == 'title')?.[1]
-                    : event?.tags.find((e) => e[0] == 'd')?.[1],
-                startSummary:
-                  event?.tags.find((e) => e[0] == 'summary')?.[0] &&
-                  event?.tags.find((e) => e[0] == 'summary')?.[1]
-                    ? event?.tags.find((e) => e[0] == 'summary')?.[1]
-                    : undefined,
-                startContent: event?.content
-              })
-            )}>Fork</a
+          on:click={() => {
+            let data = JSON.stringify({
+              startTitle:
+                event?.tags.find((e) => e[0] == 'title')?.[0] &&
+                event?.tags.find((e) => e[0] == 'title')?.[1]
+                  ? event.tags.find((e) => e[0] == 'title')?.[1]
+                  : event?.tags.find((e) => e[0] == 'd')?.[1],
+              startSummary:
+                event?.tags.find((e) => e[0] == 'summary')?.[0] &&
+                event?.tags.find((e) => e[0] == 'summary')?.[1]
+                  ? event?.tags.find((e) => e[0] == 'summary')?.[1]
+                  : undefined,
+              startContent: event?.content
+            });
+            $createChildEverywhere ? createChild('editor', data) : replaceSelf('editor', data);
+          }}>Fork</a
         >
         &nbsp;• &nbsp;<a class="cursor-pointer" on:click={shareCopy}
           >{#if copied}Copied!{:else}Share{/if}</a

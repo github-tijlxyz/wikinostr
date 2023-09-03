@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
   import { browser } from '$app/environment';
   import { ndk } from '$lib/ndk';
   import { NDKNip07Signer } from '@nostr-dev-kit/ndk';
