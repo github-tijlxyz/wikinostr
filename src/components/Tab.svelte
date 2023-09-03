@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { tijlPublicKeyHex, wikiKind } from '$lib/consts';
-  import { ndk } from '$lib/ndk';
   import { tabs } from '$lib/state';
   import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
   import Article from './Article.svelte';
+    import RecentArticles from './RecentArticles.svelte';
   import Search from './Search.svelte';
   export let tab: Tab;
 
@@ -56,15 +55,7 @@
   let idtoload: string | undefined = undefined;
   let searchquerytoload: string | undefined = undefined;
 
-  async function loadWelcomeArticle() {
-    const filter = { kinds: [wikiKind], '#d': ['wikinostr'], authors: [tijlPublicKeyHex] };
-    const result = await $ndk.fetchEvents(filter);
-    idtoload = Array.from(result)[0].id;
-  }
-
-  if (tab.type == 'welcome') {
-    loadWelcomeArticle();
-  } else if (tab.type == 'articlefind') {
+  if (tab.type == 'articlefind') {
     searchquerytoload = tab.data;
   } else if (tab.type == 'article') {
     idtoload = tab.data;
@@ -106,7 +97,11 @@
     <Search {replaceSelf} query={searchquerytoload} />
   {/if}
 
-  {#if !idtoload && !searchquerytoload}
+  {#if tab.type == "welcome"}
+    <RecentArticles />
+  {/if}
+
+  {#if !idtoload && !searchquerytoload && tab.type !== "welcome"}
     <div class="p-6">Loading...</div>
   {/if}
 </div>
