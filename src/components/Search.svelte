@@ -4,7 +4,6 @@
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
   import { onMount } from 'svelte';
   import type { TabType } from '$lib/types';
-  import { stringify } from 'postcss';
 
   export let query: string;
   export let replaceSelf: (newType: TabType, newData: string) => void;

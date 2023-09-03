@@ -57,8 +57,11 @@ export function scrollTabIntoView(el: string | HTMLElement, wait: boolean) {
   }
 }
 
-export function isElementInViewport(el: HTMLElement) {
-  const rect = el.getBoundingClientRect();
+export function isElementInViewport(el: string | HTMLElement) {
+  const element = typeof el === 'string' ? document.querySelector(`[id^="wikitab-v0-${el}"]`) : el;
+  if (!element) return;
+  
+  const rect = element.getBoundingClientRect();
 
   return (
     rect.top >= 0 &&
