@@ -54,9 +54,10 @@
   }
 </script>
 
-<div class="mx-4 mt-4 w-5/6">
-  <h2 class="mt-2">Creating an article</h2>
-
+<div class="font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
+  <div class="prose">
+    <h1>Creating an article</h1>
+  </div>
   <div class="mt-2">
     <label class="flex items-center"
       >Title

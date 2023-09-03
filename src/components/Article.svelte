@@ -9,6 +9,7 @@
 
   export let eventid: string;
   export let createChild: (type: TabType, data: string) => void;
+  export let replaceSelf: (newType: TabType, newData: string) => void;
   let event: NDKEvent | null = null;
   let copied = false;
 
@@ -42,6 +43,9 @@
 </script>
 
 <div>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <article class="prose font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
     {#if event !== null}
       <h1 class="mb-0">
@@ -62,7 +66,26 @@
         {#if event.created_at}
           updated on {formatDate(event.created_at)}
         {/if}
-        &nbsp;• &nbsp;<a href={`/fork/${eventid}`}>Fork</a>
+        &nbsp;• &nbsp;<a
+          class="cursor-pointer"
+          on:click={() =>
+            replaceSelf(
+              'editor',
+              JSON.stringify({
+                startTitle:
+                  event?.tags.find((e) => e[0] == 'title')?.[0] &&
+                  event?.tags.find((e) => e[0] == 'title')?.[1]
+                    ? event.tags.find((e) => e[0] == 'title')?.[1]
+                    : event?.tags.find((e) => e[0] == 'd')?.[1],
+                startSummary:
+                  event?.tags.find((e) => e[0] == 'summary')?.[0] &&
+                  event?.tags.find((e) => e[0] == 'summary')?.[1]
+                    ? event?.tags.find((e) => e[0] == 'summary')?.[1]
+                    : undefined,
+                startContent: event?.content
+              })
+            )}>Fork</a
+        >
         &nbsp;• &nbsp;<a class="cursor-pointer" on:click={shareCopy}
           >{#if copied}Copied!{:else}Share{/if}</a
         >

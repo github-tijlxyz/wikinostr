@@ -5,4 +5,4 @@ export type Tab = {
   data?: string;
 };
 
-export type TabType = 'welcome' | 'articlefind' | 'article';
+export type TabType = 'welcome' | 'articlefind' | 'article' | 'settings' | 'editor';

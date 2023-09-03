@@ -1,7 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { standardRelays } from '$lib/consts';
-  import BackButton from '../../components/BackButton.svelte';
 
   let relays: string[] = [];
   let newRelay = '';
@@ -31,8 +30,6 @@
     relays = JSON.parse(localStorage.getItem('wikinostr_relays') || JSON.stringify(standardRelays));
   }
 </script>
-
-<BackButton />
 
 <div class="mx-4 mt-4 w-5/6">
   <!-- Relay Selection -->

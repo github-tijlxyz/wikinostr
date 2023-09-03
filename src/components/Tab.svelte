@@ -3,8 +3,10 @@
   import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
   import Article from './Article.svelte';
+  import Editor from './Editor.svelte';
   import RecentArticles from './RecentArticles.svelte';
   import Search from './Search.svelte';
+  import Settings from './Settings.svelte';
   export let tab: Tab;
 
   function removeSelf() {
@@ -27,7 +29,7 @@
       };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
-      setTimeout(() => scrollTabIntoView(String(newChild.id), true), 5);
+      scrollTabIntoView(String(newChild.id), true);
     }
   }
 
@@ -90,18 +92,27 @@
     ></button
   >
   {#if idtoload}
-    <Article {createChild} eventid={idtoload} />
+    <Article {replaceSelf} {createChild} eventid={idtoload} />
   {/if}
 
   {#if searchquerytoload}
-    <Search {replaceSelf} query={searchquerytoload} />
+    <Search {createChild} {replaceSelf} query={searchquerytoload} />
   {/if}
 
   {#if tab.type == 'welcome'}
     <RecentArticles {createChild} />
   {/if}
 
-  {#if !idtoload && !searchquerytoload && tab.type !== 'welcome'}
-    <div class="p-6">Loading...</div>
+  {#if tab.type == 'settings'}
+    <Settings />
+  {/if}
+
+  {#if tab.type == 'editor'}
+    <Editor
+      startSummary={JSON.parse(tab.data || 'undefined').startSummary || undefined}
+      startTitle={JSON.parse(tab.data || 'undefined').startTitle || undefined}
+      startContent={JSON.parse(tab.data || 'undefined').startContent || undefined}
+      startD={JSON.parse(tab.data || 'undefined').startD || undefined}
+    />
   {/if}
 </div>
