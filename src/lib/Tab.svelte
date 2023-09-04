@@ -2,11 +2,11 @@
   import { tabs } from '$lib/state';
   import type { Tab, TabType } from '$lib/types';
   import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
-  import Article from './Article.svelte';
-  import Editor from './Editor.svelte';
-  import RecentArticles from './RecentArticles.svelte';
-  import Search from './Search.svelte';
-  import Settings from './Settings.svelte';
+  import Article from '$cards/Article.svelte';
+  import Editor from '$cards/Editor.svelte';
+  import RecentArticles from '$cards/RecentArticles.svelte';
+  import Search from '$cards/Search.svelte';
+  import Settings from '$cards/Settings.svelte';
   export let tab: Tab;
 
   function removeSelf() {

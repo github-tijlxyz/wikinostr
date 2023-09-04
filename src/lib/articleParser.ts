@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it';
-import LinkToArticle from '../components/LinkToArticle.svelte';
+import LinkToArticle from '$components/LinkToArticle.svelte';
 
 const md = new MarkdownIt();
 

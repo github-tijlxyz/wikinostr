@@ -1,9 +1,7 @@
 <script lang="ts">
   import { wikiKind } from '$lib/consts';
   import { ndk } from '$lib/ndk';
-  import { tabs } from '$lib/state';
-  import type { Tab, TabType } from '$lib/types';
-  import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
+  import type { TabType } from '$lib/types';
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
   import { onMount } from 'svelte';
 
