@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { parsePlainText } from '$lib/articleParser';
   import { wikiKind } from '$lib/consts';
   import { ndk } from '$lib/ndk';
   import type { TabType } from '$lib/types';
@@ -10,7 +11,7 @@
 
   async function search() {
     results = [];
-    const filter = { kinds: [wikiKind], limit: 12 };
+    const filter = { kinds: [wikiKind], limit: 24 };
     const events = await $ndk.fetchEvents(filter);
     if (!events) {
       results = [];
@@ -60,7 +61,7 @@
               192
             )}{#if String(result.tags.find((e) => e[0] == 'summary')?.[1])?.length > 192}...{/if}
         {:else}
-          {result.content.length <= 192 ? result.content : result.content.slice(0, 189) + '...'}
+          {result.content.length <= 192 ? parsePlainText(result.content.slice(0, 189)) : parsePlainText(result.content.slice(0, 189)) + '...'}
         {/if}
       </p>
     </div>

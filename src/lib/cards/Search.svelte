@@ -5,6 +5,7 @@
   import { onMount } from 'svelte';
   import type { TabType } from '$lib/types';
   import { createChildEverywhere } from '$lib/state';
+  import { parsePlainText } from '$lib/articleParser';
 
   export let query: string;
   export let replaceSelf: (newType: TabType, newData: string) => void;
@@ -73,7 +74,7 @@
               192
             )}{#if String(result.tags.find((e) => e[0] == 'summary')?.[1])?.length > 192}...{/if}
         {:else}
-          {result.content.length <= 192 ? result.content : result.content.slice(0, 189) + '...'}
+          {result.content.length <= 192 ? parsePlainText(result.content.slice(0, 189)) : parsePlainText(result.content.slice(0, 189)) + '...'}
         {/if}
       </p>
     </div>

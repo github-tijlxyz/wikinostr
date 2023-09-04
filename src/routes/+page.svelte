@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TabElement from '$lib/Tab.svelte';
+  import TabElement from '$lib/Card.svelte';
   import { createChildEverywhere, tabs } from '$lib/state';
   import Searchbar from '$components/Searchbar.svelte';
   import { scrollTabIntoView } from '$lib/utils';
