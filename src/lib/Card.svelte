@@ -1,12 +1,13 @@
 <script lang="ts">
   import { tabs } from '$lib/state';
-  import type { Tab, TabType } from '$lib/types';
-  import { generateRandomNumber, scrollTabIntoView, isElementInViewport } from '$lib/utils';
+  import type { Tab } from '$lib/types';
+  import { next, scrollTabIntoView, isElementInViewport } from '$lib/utils';
   import Article from '$cards/Article.svelte';
   import Editor from '$cards/Editor.svelte';
-  import RecentArticles from '$cards/RecentArticles.svelte';
+  import Welcome from '$lib/cards/Welcome.svelte';
   import Search from '$cards/Search.svelte';
   import Settings from '$cards/Settings.svelte';
+  import UserArticles from './cards/UserArticles.svelte';
   export let tab: Tab;
 
   function removeSelf() {
@@ -14,19 +15,14 @@
     if (index !== -1) {
       const newTabs = [...$tabs];
       newTabs.splice(index, 1);
-      tabs.set(newTabs);
+      $tabs = newTabs;
+      tabs.set($tabs);
     }
   }
 
-  function createChild(type: TabType, data: string) {
+  function createChild(newChild: Tab) {
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
-      const newChild: Tab = {
-        id: generateRandomNumber(),
-        parent: tab.id,
-        type: type,
-        data: data
-      };
       const newTabs = $tabs.slice(0, index + 1).concat(newChild);
       tabs.set(newTabs);
       setTimeout(() => {
@@ -37,7 +33,10 @@
     }
   }
 
-  function replaceSelf(newType: TabType, newData: string) {
+  function replaceSelf(updatedTab: Tab) {
+    if (updatedTab !== tab.previous) {
+      updatedTab.previous = tab;
+    }
     const index = $tabs.findIndex((item) => item.id === tab.id);
     if (index !== -1) {
       const newTabs = $tabs.slice();
@@ -48,23 +47,15 @@
           newTabs.splice(childIndex, 1);
         }
       });
-      const updatedTab: Tab = {
-        id: generateRandomNumber(),
-        type: newType,
-        data: newData
-      };
       newTabs[index] = updatedTab;
       tabs.set(newTabs);
     }
   }
 
-  let idtoload: string | undefined = undefined;
-  let searchquerytoload: string | undefined = undefined;
-
-  if (tab.type == 'articlefind') {
-    searchquerytoload = tab.data;
-  } else if (tab.type == 'article') {
-    idtoload = tab.data;
+  function back() {
+    if (tab.previous) {
+      replaceSelf(tab.previous);
+    }
   }
 
   function handleClick(ev: { currentTarget: HTMLElement }) {
@@ -84,6 +75,20 @@
   h-[calc(100vh_-_32px)]"
   on:click={handleClick}
 >
+  {#if tab.previous}
+    <button on:click={back}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+  {/if}
   <button on:click={removeSelf}
     ><svg
       xmlns="http://www.w3.org/2000/svg"
@@ -95,28 +100,18 @@
       ><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
     ></button
   >
-  {#if idtoload}
-    <Article {replaceSelf} {createChild} eventid={idtoload} />
-  {/if}
 
-  {#if searchquerytoload}
-    <Search {createChild} {replaceSelf} query={searchquerytoload} />
-  {/if}
-
-  {#if tab.type == 'welcome'}
-    <RecentArticles {createChild} />
-  {/if}
-
-  {#if tab.type == 'settings'}
+  {#if tab.type == 'article'}
+    <Article {replaceSelf} {createChild} eventid={tab.data} />
+  {:else if tab.type == 'find'}
+    <Search {createChild} {replaceSelf} query={tab.data} />
+  {:else if tab.type == 'welcome'}
+    <Welcome {replaceSelf} {createChild} />
+  {:else if tab.type == 'settings'}
     <Settings />
-  {/if}
-
-  {#if tab.type == 'editor'}
-    <Editor
-      startSummary={JSON.parse(tab.data || 'undefined').startSummary || undefined}
-      startTitle={JSON.parse(tab.data || 'undefined').startTitle || undefined}
-      startContent={JSON.parse(tab.data || 'undefined').startContent || undefined}
-      startD={JSON.parse(tab.data || 'undefined').startD || undefined}
-    />
+  {:else if tab.type == 'editor'}
+    <Editor {replaceSelf} data={tab.data} />
+  {:else if tab.type == 'user'}
+    <UserArticles {replaceSelf} {createChild} data={tab.data} />
   {/if}
 </div>

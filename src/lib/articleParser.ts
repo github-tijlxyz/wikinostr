@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
 import LinkToArticle from '$components/LinkToArticle.svelte';
-import plainText from "markdown-it-plain-text"
+import plainText from 'markdown-it-plain-text';
 
 const md = new MarkdownIt();
 const mdTxt = new MarkdownIt().use(plainText);

@@ -2,15 +2,15 @@
   import { ndk } from '$lib/ndk';
   import { afterUpdate, onMount } from 'svelte';
   import type { NDKEvent } from '@nostr-dev-kit/ndk';
-  import { formatDate } from '$lib/utils';
+  import { formatDate, next } from '$lib/utils';
   import { parse } from '$lib/articleParser.js';
-  import type { TabType } from '$lib/types';
+  import type { Tab } from '$lib/types';
   import { page } from '$app/stores';
-  import { createChildEverywhere } from '$lib/state';
+  import { tabBehaviour, userPublickey } from '$lib/state';
 
   export let eventid: string;
-  export let createChild: (type: TabType, data: string) => void;
-  export let replaceSelf: (newType: TabType, newData: string) => void;
+  export let createChild: (tab: Tab) => void;
+  export let replaceSelf: (tab: Tab) => void;
   let event: NDKEvent | null = null;
   let copied = false;
 
@@ -19,15 +19,26 @@
 
     elements.forEach((element) => {
       element.addEventListener('click', () => {
-        //alert(`Clicked element with ID: ${element.id}`);
         let a = element.id.slice(12);
-        createChild('articlefind', a);
+        if ($tabBehaviour == 'replace') {
+          replaceSelf({ id: next(), type: 'find', data: a });
+        } else {
+          createChild({ id: next(), type: 'find', data: a });
+        }
       });
     });
   }
 
+  function openUserArticles() {
+    createChild({
+      type: 'user',
+      id: next(),
+      data: event?.author.hexpubkey()
+    });
+  }
+
   function shareCopy() {
-    navigator.clipboard.writeText(`https://${$page.url.hostname}/?d=${eventid}`);
+    navigator.clipboard.writeText(`https://${$page.url.hostname}/article/${eventid}`);
     copied = true;
     setTimeout(() => {
       copied = false;
@@ -47,7 +58,7 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-missing-attribute -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article class="prose font-sans mx-auto p-6 lg:max-w-4xl lg:pt-6 lg:pb-28">
+  <article class="prose font-sans mx-auto p-2 lg:max-w-4xl">
     {#if event !== null}
       <h1 class="mb-0">
         {#if event?.tags.find((e) => e[0] == 'title')?.[0] && event?.tags.find((e) => e[0] == 'title')?.[1]}
@@ -58,9 +69,9 @@
       </h1>
       <span>
         {#await event.author?.fetchProfile()}
-          by <a href={`nostr:${event.author.npub}`}>...</a>,
+          by <a class="cursor-pointer" on:click={openUserArticles}>...</a>,
         {:then profile}
-          by <a href={`nostr:${event.author.npub}`}
+          by <a class="cursor-pointer" on:click={openUserArticles}
             >{profile !== null && JSON.parse(Array.from(profile)[0]?.content)?.name}</a
           >,
         {/await}
@@ -70,21 +81,11 @@
         &nbsp;• &nbsp;<a
           class="cursor-pointer"
           on:click={() => {
-            let data = JSON.stringify({
-              startTitle:
-                event?.tags.find((e) => e[0] == 'title')?.[0] &&
-                event?.tags.find((e) => e[0] == 'title')?.[1]
-                  ? event.tags.find((e) => e[0] == 'title')?.[1]
-                  : event?.tags.find((e) => e[0] == 'd')?.[1],
-              startSummary:
-                event?.tags.find((e) => e[0] == 'summary')?.[0] &&
-                event?.tags.find((e) => e[0] == 'summary')?.[1]
-                  ? event?.tags.find((e) => e[0] == 'summary')?.[1]
-                  : undefined,
-              startContent: event?.content
-            });
-            $createChildEverywhere ? createChild('editor', data) : replaceSelf('editor', data);
-          }}>Fork</a
+            $tabBehaviour == 'child'
+              ? createChild({ id: next(), type: 'editor', data: { forkId: event?.id } })
+              : replaceSelf({ id: next(), type: 'editor', data: { forkId: event?.id } });
+          }}
+          >{#if $userPublickey == event.author.hexpubkey()}Edit{:else}Fork{/if}</a
         >
         &nbsp;• &nbsp;<a class="cursor-pointer" on:click={shareCopy}
           >{#if copied}Copied!{:else}Share{/if}</a

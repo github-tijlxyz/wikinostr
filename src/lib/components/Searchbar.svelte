@@ -1,17 +1,19 @@
 <script lang="ts">
   import { tabs } from '$lib/state';
-  import { generateRandomNumber, scrollTabIntoView } from '$lib/utils';
+  import { next, scrollTabIntoView } from '$lib/utils';
   import type { Tab } from '$lib/types';
 
   let query = '';
 
   function search() {
-    if (query) {
+    let a = query;
+    query = '';
+    if (a) {
       let newTabs = $tabs;
       const newTab: Tab = {
-        id: generateRandomNumber(),
-        type: 'articlefind',
-        data: query.toLowerCase().replaceAll(' ', '-')
+        id: next(),
+        type: 'find',
+        data: a.toLowerCase().replaceAll(' ', '-')
       };
       newTabs.push(newTab);
       tabs.set(newTabs);
