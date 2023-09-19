@@ -29,14 +29,6 @@
     });
   }
 
-  function openUserArticles() {
-    createChild({
-      type: 'user',
-      id: next(),
-      data: event?.author.hexpubkey()
-    });
-  }
-
   function shareCopy() {
     navigator.clipboard.writeText(`https://${$page.url.hostname}/article/${eventid}`);
     copied = true;
@@ -69,10 +61,22 @@
       </h1>
       <span>
         {#await event.author?.fetchProfile()}
-          by <a class="cursor-pointer" on:click={openUserArticles}>...</a>,
+          by <a
+            class="cursor-pointer"
+            on:click={() => {
+              $tabBehaviour == 'replace'
+                ? replaceSelf({ type: 'user', id: next(), data: event?.author.hexpubkey() })
+                : createChild({ type: 'user', id: next(), data: event?.author.hexpubkey() });
+            }}>...</a
+          >,
         {:then profile}
-          by <a class="cursor-pointer" on:click={openUserArticles}
-            >{profile !== null && JSON.parse(Array.from(profile)[0]?.content)?.name}</a
+          by <a
+            class="cursor-pointer"
+            on:click={() => {
+              $tabBehaviour == 'replace'
+                ? replaceSelf({ type: 'user', id: next(), data: event?.author.hexpubkey() })
+                : createChild({ type: 'user', id: next(), data: event?.author.hexpubkey() });
+            }}>{profile !== null && JSON.parse(Array.from(profile)[0]?.content)?.name}</a
           >,
         {/await}
         {#if event.created_at}
