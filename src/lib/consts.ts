@@ -1,6 +1,6 @@
 export const wikiKind = 30818;
 export const standardRelays = [
-  'nostr-pub.wellorder.net',
+  'wss://nostr-pub.wellorder.net',
   'wss://nos.lol',
   'wss://relay.damus.io',
   'wss://relay.snort.social',
