@@ -89,6 +89,21 @@
         >
         &nbsp;• &nbsp;<a class="cursor-pointer" on:click={shareCopy}
           >{#if copied}Copied!{:else}Share{/if}</a
+        >&nbsp;&nbsp;• &nbsp;<a
+          class="cursor-pointer"
+          on:click={() => {
+            $tabBehaviour == 'child'
+              ? createChild({
+                  id: next(),
+                  type: 'find',
+                  data: event?.tags.find((e) => e[0] == 'd')?.[1]
+                })
+              : replaceSelf({
+                  id: next(),
+                  type: 'find',
+                  data: event?.tags.find((e) => e[0] == 'd')?.[1]
+                });
+          }}>Versions</a
         >
       </span>
 
