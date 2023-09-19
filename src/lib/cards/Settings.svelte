@@ -99,26 +99,39 @@
   <div class="mb-6">
     <p class="text-sm">Relays</p>
     {#each relays as relay, index}
-      <div>
-        <button class="text-red-500" on:click={() => removeRelay(index)}> - </button>
+      <div class="border rounded-full pl-2 my-1">
+        <button
+          class="text-red-500 py-0.5 px-1.5 rounded-full text-xl font-bold"
+          on:click={() => removeRelay(index)}
+        >
+          -
+        </button>
         {relay}
       </div>
     {/each}
-    <div>
-      <button on:click={addRelay} class="text-green-500"> + </button>
+    <div class="flex">
       <input
         bind:value={newRelay}
         type="text"
-        class="inline shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+        class="inline mr-0 rounded-md rounded-r-none shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
         placeholder="wss://relay.example.com"
       />
+      <button
+        on:click={addRelay}
+        type="button"
+        class="inline-flex ml-0 rounded-md rounded-l-none items-center px-2.5 py-1.5 border border-transparent text-sm font-medium shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >Add</button
+      >
     </div>
   </div>
 
   <!-- More options -->
   <div class="mb-6">
     <p class="text-sm">Tab Behaviour</p>
-    <select bind:value={newTabBehaviour}>
+    <select
+      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+      bind:value={newTabBehaviour}
+    >
       <option value="replace">Replace Self Everywhere</option>
       <option value="normal">Normal</option>
       <option value="child">Create Child Everywhere</option>

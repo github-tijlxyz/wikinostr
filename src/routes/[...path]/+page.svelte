@@ -5,9 +5,6 @@
   import type { Tab } from '$lib/types';
   import { next } from '$lib/utils';
   import { goto } from '$app/navigation';
-  import { browser } from '$app/environment';
-  import { NDKNip07Signer } from '@nostr-dev-kit/ndk';
-  import { ndk } from '$lib/ndk';
 
   onMount(() => {
     // Load path

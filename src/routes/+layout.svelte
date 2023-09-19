@@ -95,7 +95,7 @@ h-[calc(100vh_-_32px)]"
   >
     <div class="p-6"><Searchbar /></div>
     <div class=""></div>
-    <div class="absolute bottom-4 w-full">
+    <div class="absolute bottom-12 w-full">
       <div class="prose text-center mx-auto">
         <div class="inline">
           <a class="cursor-pointer" on:click={openRecentArticles}>welcome</a> •
@@ -108,7 +108,9 @@ h-[calc(100vh_-_32px)]"
         <div class="inline">•</div>
         <div class="inline">
           <a class="cursor-pointer" on:click={openSettings}>settings</a> •
-          <a class="cursor-pointer" on:click={openMyArticles}>my articles</a>
+          {#if $userPublickey !== ''}
+            <a class="cursor-pointer" on:click={openMyArticles}>my articles</a>{:else}
+            <a class="cursor-pointer" on:click={openSettings}>login</a>{/if}
         </div>
       </div>
     </div>

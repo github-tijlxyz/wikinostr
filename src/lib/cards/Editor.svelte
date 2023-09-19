@@ -119,9 +119,7 @@
 
   <div>
     {#if success == -1}
-      <p>
-        Something went wrong :( note that NIP07 browser extentions are only supported for signing
-      </p>
+      <p>Something went wrong :( note that only NIP07 is supported for signing</p>
       <p>
         Error Message: {error}
       </p>
