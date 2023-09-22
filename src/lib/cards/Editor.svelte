@@ -8,9 +8,9 @@
 
   export let replaceSelf: (tab: Tab) => void;
   export let data: any;
-  data.title = '';
-  data.summary = '';
-  data.content = '';
+  if (!data.title) data.title = '';
+  if (!data.summary) data.summary = '';
+  if (!data.content) data.content = '';
   let forkev: NDKEvent | null;
 
   let success = 0;
