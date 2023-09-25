@@ -31,6 +31,7 @@
   "type": "module",
   "dependencies": {
     "@nostr-dev-kit/ndk": "^0.8.22",
+    "@nostr-dev-kit/ndk-cache-dexie": "^1.2.0",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.9",
     "markdown-it": "^13.0.1",
